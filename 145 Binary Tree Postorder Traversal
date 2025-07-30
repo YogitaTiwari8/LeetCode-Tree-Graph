@@ -1,0 +1,43 @@
+// LeetCode: 145
+// Problem name: Binary Tree Postorder Traversal
+// https://leetcode.com/problems/binary-tree-postorder-traversal/
+// Category: Tree, DFS, Recursion
+// Approach:
+// - Use a helper function to perform recursive postorder traversal.
+// - Recursively visit the left subtree, then the right subtree, and finally the root.
+// - Store the values in a list and return it.
+
+Solution
+--
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        postOrderHelper(root, list);
+        return list;
+    }
+
+    void postOrderHelper(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        postOrderHelper(root.left, list);     // Traverse left subtree
+        postOrderHelper(root.right, list);    // Traverse right subtree
+        list.add(root.val);                   // Visit root
+    }
+}
+--
