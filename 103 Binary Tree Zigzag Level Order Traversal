@@ -1,0 +1,65 @@
+// LeetCode: 103
+// Problem name: Binary Tree Zigzag Level Order Traversal
+// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+// Category: Tree, BFS
+// Approach:
+// - Use a queue to perform BFS level by level.
+// - Maintain a `level` counter to track even/odd levels.
+// - For even levels, insert elements at the end of the list (left to right).
+// - For odd levels, insert elements at the beginning of the list (right to left).
+// - Add each level's list to the final result list.
+
+Solution
+--
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> big = new ArrayList<>();
+        if (root == null) {
+            return big;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int level = 0;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List<Integer> small = new ArrayList<>();
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode curr = queue.poll();
+                if (level % 2 == 0) {
+                    small.add(curr.val);            // Left to Right
+                } else {
+                    small.add(0, curr.val);         // Right to Left
+                }
+
+                if (curr.left != null) {
+                    queue.add(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.add(curr.right);
+                }
+            }
+            big.add(small);
+            level++;
+        }
+        return big;
+    }
+}
+--
